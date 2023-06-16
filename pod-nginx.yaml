@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: web
+  labels:
+        env: prod
+        app: main
+        tier: frontend
+        owner: Efim
+spec:
+  containers:
+    - name: container-nginx
+      image: nginx:1.25.0
+      ports:
+        - containerPort: 80
