@@ -21,6 +21,15 @@ spec:
         ports:
         - containerPort: 80
           protocol: TCP
+        env:
+        - name: SECRET_KEY
+          value: replace_me
+        - name: DEBUG
+          value: "False"
+        - name: DATABASE_URL
+          value: postgres://test_k8s:OwOtBep9Frut@192.168.1.35:5432/test_k8s
+        - name: ALLOWED_HOSTS
+          value: 127.0.0.1,localhost,172.26.28.91
 
 ---
 apiVersion: v1
