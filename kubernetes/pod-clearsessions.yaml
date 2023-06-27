@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: django-clearsessions
+  labels:
+        app: django-deployment
+spec:
+  containers:
+    - name: django-web
+      image: web:latest
+      imagePullPolicy: Never
+      ports:
+      - containerPort: 80
+        protocol: TCP
+      envFrom:
+      - configMapRef:
+          name: django-config
+      command:
+      - python
+      - manage.py
+      - clearsessions
+  restartPolicy: Never
