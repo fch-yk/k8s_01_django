@@ -10,7 +10,6 @@ The Django is started with [Nginx Unit](https://unit.nginx.org/).
 - [kubectl](https://kubernetes.io/docs/tasks/tools/);
 - Virtualization software, for example, HyperV, Docker (go [here](https://minikube.sigs.k8s.io/docs/drivers/) for more);
 
-
 ## Installation
 
 - Start a cluster:
@@ -45,7 +44,7 @@ data:
   SECRET_KEY: replace_me
   DEBUG: "False"
   DATABASE_URL: postgres://test_k8s:OwOtBep9Frut@192.168.1.35:5432/test_k8s
-  ALLOWED_HOSTS: 127.0.0.1,localhost
+  ALLOWED_HOSTS: star-burger.test
 ```
 
 - Create the ConfigMap:
@@ -60,13 +59,56 @@ kubectl create -f configmap.yaml
 kubectl apply -f deploy.yaml
 ```
 
+- Enable the NGINX Ingress controller:
+
+```bash
+minikube addons enable ingress
+```
+
+- Verify that the NGINX Ingress controller is running:
+
+```bash
+kubectl get pods -n ingress-nginx
+```
+
+- Create the ingress object:
+
+```bash
+kubectl apply -f ingress.yaml
+```
+
+- Verify that the Ingress is applied:
+
+```bash
+kubectl get ingress
+```
+
+- Get the minikube ip:
+
+```bash
+minikube ip
+```
+
+- Edit the `hosts` file, which is usually situated in the `C:\Windows\System32\drivers\etc\` directory (for Windows 11). Add the mapping of the minikube IP to the `star-burger.test` host name. For example:
+
+```config
+172.26.28.91 star-burger.test
+```
+
+where `172.26.28.91` is the minikube IP
+
+- Verify that the website works (you can also just go to [star-burger.test](http://star-burger.test)):
+
+```bash
+curl star-burger.test
+```
+
 ... migrate
 ... createsuperuser
 
 ### Usage
 
 Open the admin site
-
 
 ## Project goals
 
