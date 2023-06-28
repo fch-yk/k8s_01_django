@@ -106,28 +106,27 @@ curl star-burger.test
 ... migrate
 ... createsuperuser
 
-## Clearing the session store by launching the `django-clearsessions` pod
+## Clearing the session store
 
-It is possible to clear the session store by launching the `django-clearsessions` pod once.
-
-- Run the "django-clearsessions" pod:
+Create the `django-clearsessions` cronjob, which will run monthly:
 
 ```bash
-kubectl apply -f pod-clearsessions.yaml
+kubectl create -f clearsessions.yaml
 ```
 
-- Verify that the `django-clearsessions` pod status is `Completed`:
+- Verify that the `django-clearsessions` cronjob is created:
 
 ```bash
-kubectl get pods
+kubectl get cronjob
 ```
 
-- Delete the `django-clearsessions` pod:
+- You can trigger the `django-clearsessions` cronjob manually:
 
 ```bash
-kubectl delete pods django-clearsessions
+kubectl create job --from=cronjob/django-clearsessions clear-job
 ```
 
+where `clear-job` is a job name
 
 ## Usage
 
