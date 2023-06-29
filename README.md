@@ -106,6 +106,38 @@ curl star-burger.test
 ... migrate
 ... createsuperuser
 
+## Migrations execution
+
+- Create the `django-migrate` job:
+
+```bash
+kubectl apply -f migrate.yaml
+```
+
+- Verify that the `django-migrate` job has been created:
+
+```bash
+kubectl describe job django-migrate
+```
+
+- Verify that migrations are finished:
+
+Find out the name of the pod which was created by the job. The name will begin with `django-migrate`:
+
+```bash
+kubectl get pods
+```
+
+Print the pod's logs:
+
+```bash
+kubectl logs django-migrate-jlj8p
+```
+
+where `django-migrate-jlj8p` is the pod's name
+
+_Note_: the job and the pod will be deleted in 120 seconds according to the `spec.ttlSecondsAfterFinished` parameter in the `migrate.yaml` manifest file.
+
 ## Clearing the session store
 
 Create the `django-clearsessions` cronjob, which will run monthly:
